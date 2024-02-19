@@ -21,7 +21,8 @@ void InputMgr::Init()
     infoH.positives.push_back(sf::Keyboard::Right);
 
     infoH.negatives.push_back(sf::Keyboard::Left);
-    infoH.negatives.push_back(sf::Keyboard::A);
+    infoH.negatives.push_back(sf::Keyboard::A);  // 0 
+    infoH.positives.push_back(sf::Keyboard::B);  // 1
 
     infoH.sensi = 10.f;
     infoH.value = 0.f;
@@ -36,6 +37,7 @@ void InputMgr::Init()
     infoV.positives.push_back(sf::Keyboard::Down);
     infoV.negatives.push_back(sf::Keyboard::W);
     infoV.negatives.push_back(sf::Keyboard::Up);
+
     infoV.sensi = 5.f;
     infoV.value = 0.f;
 
@@ -60,14 +62,17 @@ void InputMgr::UpdateEvent(const sf::Event& ev)
         break;
 
     case sf::Event::MouseButtonPressed:
+        if (!GetKey(ev.key.code))
+        {
+            ingList.push_back(ev.key.code);
+            downList.push_back(ev.key.code);
+        }
         break;
-
     case sf::Event::MouseButtonReleased:
+        ingList.remove(ev.key.code);
+        upList.push_back(ev.key.code);
         break;
-
-
     }
-
 
 }
 
@@ -175,19 +180,15 @@ const sf::Vector2f InputMgr::GetMousePos()
 
 bool InputMgr::GetMouseButtonDown(sf::Mouse::Button key)
 {
-    if (key == sf::Event::MouseButtonPressed)
-    {
-        
-    }
-    return false;
+    return std::find(downList.begin(), downList.end(), key) != downList.end();
 }
 
 bool InputMgr::GetMouseButtonUp(sf::Mouse::Button key)
 {
-    return false;
+    return std::find(upList.begin(), upList.end(), key) != upList.end();
 }
 
 bool InputMgr::GetMouseButton(sf::Mouse::Button key)
 {
-    return false;
+    return std::find(ingList.begin(), ingList.end(), key) != ingList.end();
 }

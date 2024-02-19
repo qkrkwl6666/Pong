@@ -14,7 +14,6 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Pong");
-    
 
     InputMgr::Init();
 
@@ -38,11 +37,22 @@ int main()
 
             InputMgr::UpdateEvent(event);
 
-            if (event.type == sf::Event::MouseMoved)
+           /* if (event.type == sf::Event::MouseMoved)
             {
                 std::cout << "mouse x: " << event.mouseMove.x << std::endl;
                 std::cout << "mouse y: " << event.mouseMove.y << std::endl;
+            }*/
+
+            if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+            {
+                std::cout << "LEFT " << std::endl;
             }
+
+            if (InputMgr::GetMouseButtonDown(sf::Mouse::Right))
+            {
+                std::cout << "RIGHT " << std::endl;
+            }
+
         }
 
         InputMgr::Update(dt);
@@ -71,7 +81,7 @@ int main()
         }
         else if (ball.isBoundBat)
         {
-            // 점수 추가
+            
 
         }
 

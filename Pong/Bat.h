@@ -8,7 +8,7 @@ protected:
 public:
 	Bat();
 
-	float _speed = 500.f;
+	float _speed = 1000.f;
 	sf::RectangleShape _shape;
 
 	void Update(float dt);
