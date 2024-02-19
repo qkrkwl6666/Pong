@@ -175,6 +175,10 @@ const sf::Vector2f InputMgr::GetMousePos()
 
 bool InputMgr::GetMouseButtonDown(sf::Mouse::Button key)
 {
+    if (key == sf::Event::MouseButtonPressed)
+    {
+        
+    }
     return false;
 }
 

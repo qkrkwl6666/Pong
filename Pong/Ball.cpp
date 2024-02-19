@@ -3,7 +3,7 @@
 #include "Bat.h"
 #include "Framework/Utils.h"
 
-Ball::Ball(Bat& b, const sf::FloatRect& bounds) : bat(bat) ,
+Ball::Ball(Bat& b, const sf::FloatRect& bounds) : bat(b) ,
 	windowBounds(bounds)
 {
 	_shape.setRadius(10.f);

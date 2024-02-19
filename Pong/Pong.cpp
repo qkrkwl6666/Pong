@@ -37,7 +37,14 @@ int main()
                 window.close();
 
             InputMgr::UpdateEvent(event);
+
+            if (event.type == sf::Event::MouseMoved)
+            {
+                std::cout << "mouse x: " << event.mouseMove.x << std::endl;
+                std::cout << "mouse y: " << event.mouseMove.y << std::endl;
+            }
         }
+
         InputMgr::Update(dt);
 
         if (!isBallActive && InputMgr::GetKeyDown(sf::Keyboard::Space))
