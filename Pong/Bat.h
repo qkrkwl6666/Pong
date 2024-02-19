@@ -1,14 +1,15 @@
 #pragma once
+#include "pch.h"
 
 class Bat
 {
 protected:
 	
 public:
-	float _speed = 100.f;
-	sf::RectangleShape _shape;
+	Bat();
 
-	void Init();
+	float _speed = 500.f;
+	sf::RectangleShape _shape;
 
 	void Update(float dt);
 	void Draw(sf::RenderWindow& window);

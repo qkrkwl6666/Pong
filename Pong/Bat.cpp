@@ -1,14 +1,23 @@
-#include "pch.h"
+
 #include "Bat.h"
 
-void Bat::Init()
+Bat::Bat()
 {
+	_shape.setSize({ 100, 5 });
+	_shape.setPosition({ 1920.f / 2.f , 1080.f - 20.f });
+	_shape.setFillColor(sf::Color::White);
 
+	Utils::SetOrigin(_shape, Origins::TC);
 }
 
 void Bat::Update(float dt)
 {
 	// Å° ÀÔ·Â
+	float h = InputMgr::GetAxisRaw(Axis::Horieontal);
+
+	sf::Vector2f pos = _shape.getPosition();
+	pos.x += h * _speed * dt;
+	_shape.setPosition(pos);
 
 }
 
