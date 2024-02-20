@@ -47,10 +47,24 @@ public:
 	static bool GetKeyUp(sf::Keyboard::Key key);
 	static bool GetKey(sf::Keyboard::Key key);
 
-	static const sf::Vector2f GetMousePos();
+	static const sf::Vector2f GetMousePos(sf::Event event);
 	static bool GetMouseButtonDown(sf::Mouse::Button key);
 	static bool GetMouseButtonUp(sf::Mouse::Button key);
 	static bool GetMouseButton(sf::Mouse::Button key);
+
+	static sf::Keyboard::Key MouseButtonToKey
+	(sf::Mouse::Button button)
+	{
+		return (sf::Keyboard::Key)
+			(button + sf::Keyboard::Key::KeyCount);
+	}
+
+	static sf::Mouse::Button MouseButtonToButton
+	(sf::Keyboard::Key key)
+	{
+		return (sf::Mouse::Button)
+			(key + sf::Keyboard::Key::KeyCount);
+	}
 
 };
 

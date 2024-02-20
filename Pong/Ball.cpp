@@ -77,13 +77,15 @@ void Ball::Update(float dt)
 	}
 
 	// 오른쪽 충돌
-	if (_shape.getGlobalBounds().left + _shape.getGlobalBounds().width > windowBounds.width)
+	if (_shape.getGlobalBounds().left + _shape.getGlobalBounds().
+		width > windowBounds.width)
 	{
 		Fire({ -1.f, RandomValue() }, _speed);
 	}
 
 	// 아래 충돌
-	if (_shape.getGlobalBounds().top + _shape.getGlobalBounds().height > windowBounds.height)
+	if (_shape.getGlobalBounds().top + _shape.getGlobalBounds().
+		height > windowBounds.height)
 	{
 		Fire({ RandomValue(), -1.f }, _speed);
 	}

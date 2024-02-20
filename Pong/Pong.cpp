@@ -37,6 +37,9 @@ int main()
 
             InputMgr::UpdateEvent(event);
 
+            std::cout << InputMgr::GetMousePos(event).x << std::endl;
+            std::cout << InputMgr::GetMousePos(event).y << std::endl;
+
            /* if (event.type == sf::Event::MouseMoved)
             {
                 std::cout << "mouse x: " << event.mouseMove.x << std::endl;

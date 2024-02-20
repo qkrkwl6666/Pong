@@ -1,5 +1,4 @@
 #include "InputMgr.h"
-
 #include "Utils.h"
 #include <map>
 #include <list>
@@ -19,10 +18,11 @@ void InputMgr::Init()
 
     infoH.positives.push_back(sf::Keyboard::D);
     infoH.positives.push_back(sf::Keyboard::Right);
+    infoH.positives.push_back(MouseButtonToKey(sf::Mouse::Button::Right));
 
     infoH.negatives.push_back(sf::Keyboard::Left);
     infoH.negatives.push_back(sf::Keyboard::A);  // 0 
-    infoH.positives.push_back(sf::Keyboard::B);  // 1
+    infoH.negatives.push_back(MouseButtonToKey(sf::Mouse::Button::Left));
 
     infoH.sensi = 10.f;
     infoH.value = 0.f;
@@ -62,15 +62,17 @@ void InputMgr::UpdateEvent(const sf::Event& ev)
         break;
 
     case sf::Event::MouseButtonPressed:
-        if (!GetKey(ev.key.code))
+        if (!GetMouseButton(ev.mouseButton.button))
         {
-            ingList.push_back(ev.key.code);
-            downList.push_back(ev.key.code);
+            sf::Keyboard::Key button = MouseButtonToKey(ev.mouseButton.button);
+            ingList.push_back(button);
+            downList.push_back(button);
         }
         break;
     case sf::Event::MouseButtonReleased:
-        ingList.remove(ev.key.code);
-        upList.push_back(ev.key.code);
+        sf::Keyboard::Key button = MouseButtonToKey(ev.mouseButton.button);
+        ingList.remove(button);
+        upList.push_back(button);
         break;
     }
 
@@ -173,22 +175,31 @@ bool InputMgr::GetKey(sf::Keyboard::Key key)
     return std::find(ingList.begin(), ingList.end(), key) != ingList.end();
 }
 
-const sf::Vector2f InputMgr::GetMousePos()
-{
-    return { 0, 0 };
-}
-
 bool InputMgr::GetMouseButtonDown(sf::Mouse::Button key)
 {
-    return std::find(downList.begin(), downList.end(), key) != downList.end();
+    return std::find(downList.begin(), downList.end(), MouseButtonToKey(key))
+        != downList.end();
 }
 
 bool InputMgr::GetMouseButtonUp(sf::Mouse::Button key)
 {
-    return std::find(upList.begin(), upList.end(), key) != upList.end();
+    return std::find(upList.begin(), upList.end(), 
+        MouseButtonToKey(key)) != upList.end();
 }
 
 bool InputMgr::GetMouseButton(sf::Mouse::Button key)
 {
-    return std::find(ingList.begin(), ingList.end(), key) != ingList.end();
+    return std::find(ingList.begin(), ingList.end(), 
+        MouseButtonToKey(key)) != ingList.end();
+}
+
+const sf::Vector2f InputMgr::GetMousePos(sf::Event event)
+{
+    return (sf::Vector2f)sf::Mouse::getPosition();
+
+   /* if (event.type == sf::Event::MouseMoved)
+    {
+        return { (float)event.mouseMove.x , (float)event.mouseMove.y };
+    }*/
+
 }
