@@ -19,6 +19,7 @@ public:
 
 	void Update(float dt);
 	void Draw(sf::RenderWindow& window);
+	void Shot();
 
 private:
 	Ball* _ball;

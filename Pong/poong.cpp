@@ -26,6 +26,7 @@ void poong::Init()
     _GameOver->SetString("");
     _GameOver->SetOrigin(Origins::MC);
     _GameOver->SetActive(false);
+  
 }
 
 void poong::Release()
@@ -35,6 +36,7 @@ void poong::Release()
 
 void poong::Reset()
 {
+    FRAMEWORK.SetTimeScale(1.f);
     _score = 0;
     _lives = 3;
     isGameOver = false;
@@ -55,11 +57,7 @@ void poong::Exit()
 
 void poong::Update(float dt)
 {
-	if (!isBallActive && InputMgr::GetKeyDown(sf::Keyboard::Space))
-    {
-        _ball->Fire({ 1.f, -1.f }, 1000.f);
-        isBallActive = true;
-    }
+    Shot();
 
     _bat->Update(dt);
 
@@ -85,6 +83,7 @@ void poong::Update(float dt)
     }
     if (_lives <= 0)
     {
+        FRAMEWORK.SetTimeScale(0.f);
         _GameOver->SetString("GameOver Enter To Restart");
         isGameOver = true;
     }
@@ -100,6 +99,8 @@ void poong::Update(float dt)
     _Ui->SetString("Score : " + std::to_string(_score) +
         "  Lives : " + std::to_string(_lives));
 
+    Scene::Update(dt);
+
 }
 
 void poong::Draw(sf::RenderWindow& window)
@@ -108,4 +109,13 @@ void poong::Draw(sf::RenderWindow& window)
 	window.draw(_bat->shape); 
     _Ui->Draw(window);
     _GameOver->Draw(window);
+}
+
+void poong::Shot()
+{
+    if (!isBallActive && InputMgr::GetKeyDown(sf::Keyboard::Space))
+    {
+        _ball->Fire({ 1.f, -1.f }, 1000.f);
+        isBallActive = true;
+    }
 }
