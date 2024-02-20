@@ -1,10 +1,10 @@
 #pragma once
-#include "..\pch.h"
+#include "Defines.h"
 
 class Utils
 {
 public:
-	static float Clamp(float v,float min, float max);
+	static float Clamp(float v, float min, float max);
 
 	// Random
 	static float RandomValue(); // 0.0f ~ 1.0f
@@ -12,7 +12,6 @@ public:
 	static sf::Vector2f RandomOnUnitCircle();
 	static sf::Vector2f RandomInUnitCircle();
 	static int RandomRange(int min, int maxExclude);
-
 
 	// Origin
 	static sf::Vector2f SetOrigin(sf::Transformable& obj, Origins originPreset, const sf::FloatRect& rect);

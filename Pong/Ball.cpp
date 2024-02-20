@@ -1,104 +1,84 @@
-#include "Ball.h"
 #include "pch.h"
+#include "Ball.h"
 #include "Bat.h"
-#include "Framework/Utils.h"
 
-Ball::Ball(Bat& b, const sf::FloatRect& bounds) : bat(b) ,
-	windowBounds(bounds)
+Ball::Ball(Bat& bat, const sf::FloatRect& bounds)
+	: bat(bat), windowBounds(bounds)
 {
-	_shape.setRadius(10.f);
-	_shape.setPosition({1920.f / 2.f , 1080.f - 35.f});
-	_shape.setFillColor(sf::Color::White);
-
-	Utils::SetOrigin(_shape, Origins::BC);
-	font.loadFromFile("DS-DIGI.ttf");
-	text.setFont(font);
-
-	text.setCharacterSize(50);
-	text.setString("SCORE : " + std::to_string(_score) +
-		"  LIVES : " + std::to_string(_lives));
+	shape.setRadius(10.f);
+	shape.setFillColor(sf::Color::White);
+	Utils::SetOrigin(shape, Origins::BC);
 }
 
 void Ball::Fire(sf::Vector2f d, float s)
 {
 	direction = d;
-	_speed = s;
+	speed = s;
 	isDead = false;
-}
-
-float Ball::RandomValue()
-{
-	if (Utils::RandomValue() > 0.5)
-	{
-		return 1.f;
-	}
-	else
-		return -1.f;
-}
-
-void Ball::AddScore()
-{
-	if (isBoundBat)
-	{
-		_score += 10;
-		text.setString("SCORE : " + std::to_string(_score) +
-			"  LIVES : " + std::to_string(_lives));
-	}
-
 }
 
 void Ball::Update(float dt)
 {
-	sf::Vector2f pos = _shape.getPosition();
-	pos += direction * _speed * dt;
-	_shape.setPosition(pos);
-	// ballbounds top == windowbounds 서로 비교하고 충돌검사
-
-	const sf::FloatRect& ballBounds = _shape.getGlobalBounds();
-	const sf::FloatRect& batBounds = bat._shape.getGlobalBounds();
-	
-	// isDead = true;
-
-	//충돌 처리 bat
-	if (ballBounds.intersects(batBounds) && !isBoundBat)
-	{
-		direction = { RandomValue(), -1.f };
-		isBoundBat = true;
-	}
-
-	AddScore();
-
 	isBoundBat = false;
 
-	// 위 충돌
-	if (_shape.getGlobalBounds().top < windowBounds.top)
+	const sf::FloatRect& prevBallBounds = shape.getGlobalBounds();
+	sf::Vector2f prevPos = shape.getPosition();
+	sf::Vector2f pos = prevPos;
+	pos += direction * speed * dt;
+	shape.setPosition(pos);
+
+	const sf::FloatRect& ballBounds = shape.getGlobalBounds();
+	float ballLeft = ballBounds.left;
+	float ballRight = ballBounds.left + ballBounds.width;
+	float ballTop = ballBounds.top;
+	float ballBottom = ballBounds.top + ballBounds.height;
+
+	float windowLeft = windowBounds.left;
+	float windowRight = windowBounds.left + windowBounds.width;
+	float windowTop = windowBounds.top;
+	float windowBottom = windowBounds.top + windowBounds.height;
+
+	// 충돌 처리 windowBounds
+	// isDead = true;
+	if (ballBottom > windowBottom + 300)
 	{
-		Fire({ RandomValue(), 1.f }, _speed);
+		isDead = true;
+		shape.setPosition(prevPos);
+		direction.y *= -1.f;
+	}
+	else if (ballTop < windowTop)
+	{
+		shape.setPosition(prevPos);
+		direction.y *= -1.f;
+	}
+	else if (ballLeft < windowLeft || ballRight > windowRight)
+	{
+		shape.setPosition(prevPos);
+		direction.x *= -1.f;
 	}
 
-	// 오른쪽 충돌
-	if (_shape.getGlobalBounds().left + _shape.getGlobalBounds().
-		width > windowBounds.width)
+	// 충돌 처리 bat
+	const sf::FloatRect& batBounds = bat.shape.getGlobalBounds();
+	if (!prevBallBounds.intersects(bat.prevGlobalBounds) && ballBounds.intersects(batBounds))
 	{
-		Fire({ -1.f, RandomValue() }, _speed);
-	}
+		float batLeft = batBounds.left;
+		float batRight = batBounds.left + batBounds.width;
+		float batTop = batBounds.top;
+		float batBottom = batBounds.top + batBounds.height;
 
-	// 아래 충돌
-	if (_shape.getGlobalBounds().top + _shape.getGlobalBounds().
-		height > windowBounds.height)
-	{
-		Fire({ RandomValue(), -1.f }, _speed);
-	}
-
-	// 왼쪽 충돌
-	if (_shape.getGlobalBounds().left < windowBounds.left)
-	{
-		Fire({ 1.f, RandomValue() }, _speed);
+		if (ballBottom > batTop || ballTop < batBottom)
+		{
+			direction.y *= -1.f;
+		}
+		if (ballLeft > batRight || ballRight < batLeft)
+		{
+			direction.x *= -1.f;
+		}
+		isBoundBat = true;
 	}
 }
 
 void Ball::Draw(sf::RenderWindow& window)
 {
-	window.draw(_shape);
-	window.draw(text);
+	window.draw(shape);
 }

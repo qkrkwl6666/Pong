@@ -1,14 +1,8 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-
-#include <iostream>
-#include <list>
-#include <algorithm>
-#include <map>
 
 enum class Axis
 {
-	Horieontal,
+	Horizontal,
 	Vertical,
 };
 
@@ -16,8 +10,8 @@ struct AxisInfo
 {
 	Axis axis;
 
-	std::list<sf::Keyboard::Key> positives; // 음의 임력
-	std::list<sf::Keyboard::Key> negatives; // 양의 입력
+	std::list<sf::Keyboard::Key> positives;
+	std::list<sf::Keyboard::Key> negatives;
 
 	float sensi;
 	float value;
@@ -25,7 +19,7 @@ struct AxisInfo
 
 class InputMgr
 {
-public:
+private:
 	static std::map<Axis, AxisInfo> axisInfoMap;
 
 	static std::list<sf::Keyboard::Key> downList;
@@ -40,31 +34,25 @@ public:
 
 	static void Clear();
 
-	static float GetAxisRaw(Axis axis); // -1.0, 0, 1.0
-	static float GetAxis(Axis axis); // -1.0 ~ 1.0
-
+	static float GetAxisRaw(Axis axis);	// -1.0 0 1.0
+	static float GetAxis(Axis axis);	// -1.0 ~ 1.0
 	static bool GetKeyDown(sf::Keyboard::Key key);
 	static bool GetKeyUp(sf::Keyboard::Key key);
 	static bool GetKey(sf::Keyboard::Key key);
 
-	static const sf::Vector2f GetMousePos(sf::Event event);
+	static sf::Vector2f GetMousePos();
 	static bool GetMouseButtonDown(sf::Mouse::Button key);
 	static bool GetMouseButtonUp(sf::Mouse::Button key);
 	static bool GetMouseButton(sf::Mouse::Button key);
 
-	static sf::Keyboard::Key MouseButtonToKey
-	(sf::Mouse::Button button)
+	static sf::Keyboard::Key MouseButtonToKey(sf::Mouse::Button button)
 	{
-		return (sf::Keyboard::Key)
-			(button + sf::Keyboard::Key::KeyCount);
+		return (sf::Keyboard::Key)(button + sf::Keyboard::Key::KeyCount);
 	}
 
-	static sf::Mouse::Button MouseButtonToButton
-	(sf::Keyboard::Key key)
+	static sf::Mouse::Button KeyToMouseButton(sf::Keyboard::Key key)
 	{
-		return (sf::Mouse::Button)
-			(key + sf::Keyboard::Key::KeyCount);
+		return (sf::Mouse::Button)(key - sf::Keyboard::Key::KeyCount);
 	}
-
 };
 

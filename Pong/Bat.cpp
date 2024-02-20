@@ -1,29 +1,26 @@
-
+#include "pch.h"
 #include "Bat.h"
 
 Bat::Bat()
 {
-	_shape.setSize({ 100, 5 });
-	_shape.setPosition({ 1920.f / 2.f , 1080.f - 20.f });
-	_shape.setFillColor(sf::Color::White);
+	shape.setSize({ 100.f, 5.f });
+	shape.setPosition({ 1920.f / 2.f, 1080.f - 20.f });
+	shape.setFillColor(sf::Color::White);
 
-	Utils::SetOrigin(_shape, Origins::TC);
+	Utils::SetOrigin(shape, Origins::TC);
 }
 
 void Bat::Update(float dt)
 {
-	// 키 입력
-	float h = InputMgr::GetAxisRaw(Axis::Horieontal);
+	prevGlobalBounds = shape.getGlobalBounds();
 
-	sf::Vector2f pos = _shape.getPosition();
-	pos.x += h * _speed * dt;
-	_shape.setPosition(pos);
-
-	std::cout << InputMgr::GetMouseButton(sf::Mouse::Left) << std::endl;
-
+	float h = InputMgr::GetAxis(Axis::Horizontal);
+	sf::Vector2f pos = shape.getPosition();
+	pos.x += h * speed * dt;
+	shape.setPosition(pos);
 }
 
 void Bat::Draw(sf::RenderWindow& window)
 {
-	window.draw(_shape); // 자신의 _shape객체 그리기
+	window.draw(shape);
 }
