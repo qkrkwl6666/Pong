@@ -16,6 +16,8 @@ void poong::Init()
     _Ui = new TextGo("UI");
     _GameOver = new TextGo("GameOver");
 
+    AddGo(_bat);
+
     fontResMgr.Load("font/DS-DIGI.ttf");
     _Ui->SetFont(fontResMgr.Get("font/DS-DIGI.ttf"));
     _Ui->SetString("Score : " + std::to_string(_score) +
@@ -27,6 +29,10 @@ void poong::Init()
     _GameOver->SetOrigin(Origins::MC);
     _GameOver->SetActive(false);
   
+    for (GameObject* obj : gameObjects)
+    {
+        obj->Init();
+    }
 }
 
 void poong::Release()
@@ -63,7 +69,7 @@ void poong::Update(float dt)
 
 	if (!isBallActive)
     {
-        _ball->shape.setPosition(_bat->shape.getPosition());
+        _ball->shape.setPosition(_bat->GetPosition());
     }
     else
     {
@@ -106,7 +112,6 @@ void poong::Update(float dt)
 void poong::Draw(sf::RenderWindow& window)
 {
 	window.draw(_ball->shape); 
-	window.draw(_bat->shape); 
     _Ui->Draw(window);
     _GameOver->Draw(window);
 }

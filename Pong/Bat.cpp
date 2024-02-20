@@ -3,21 +3,20 @@
 
 Bat::Bat()
 {
-	shape.setSize({ 100.f, 5.f });
-	shape.setPosition({ 1920.f / 2.f, 1080.f - 20.f });
-	shape.setFillColor(sf::Color::White);
-
-	Utils::SetOrigin(shape, Origins::TC);
+	SetSize({ 100.f, 5.f });
+	SetPosition({ 1920.f / 2.f, 1080.f - 20.f });
+	SetColor(sf::Color::White);
+	SetOrigin(Origins::TC);
 }
 
 void Bat::Update(float dt)
 {
-	prevGlobalBounds = shape.getGlobalBounds();
+	prevGlobalBounds = GetGlobalBounds();
 
 	float h = InputMgr::GetAxis(Axis::Horizontal);
-	sf::Vector2f pos = shape.getPosition();
+	sf::Vector2f pos = GetPosition();
 	pos.x += h * speed * dt;
-	shape.setPosition(pos);
+	SetPosition(pos);
 }
 
 void Bat::Draw(sf::RenderWindow& window)

@@ -143,6 +143,7 @@
     <ClCompile Include="poong.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="ShapeGo.cpp" />
     <ClCompile Include="SpriteGo.cpp" />
     <ClCompile Include="TextGo.cpp" />
     <ClCompile Include="InputMgr.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="ResourceMgr.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
+    <ClInclude Include="ShapeGo.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpriteGo.h" />
     <ClInclude Include="TextGo.h" />

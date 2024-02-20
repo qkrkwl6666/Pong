@@ -58,7 +58,7 @@ void Ball::Update(float dt)
 	}
 
 	// 충돌 처리 bat
-	const sf::FloatRect& batBounds = bat.shape.getGlobalBounds();
+	const sf::FloatRect& batBounds = bat.GetGlobalBounds();
 	if (!prevBallBounds.intersects(bat.prevGlobalBounds) && ballBounds.intersects(batBounds))
 	{
 		float batLeft = batBounds.left;

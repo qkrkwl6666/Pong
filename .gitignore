@@ -34,3 +34,12 @@
 *.pdb
 *\vs
 *\64
+Pong/SFML-2.6.1/lib/cmake/SFML/SFMLConfig.cmake
+Pong/SFML-2.6.1/lib/cmake/SFML/SFMLConfigDependencies.cmake
+Pong/SFML-2.6.1/lib/cmake/SFML/SFMLConfigVersion.cmake
+Pong/SFML-2.6.1/lib/cmake/SFML/SFMLSharedTargets.cmake
+Pong/SFML-2.6.1/lib/cmake/SFML/SFMLSharedTargets-debug.cmake
+Pong/SFML-2.6.1/lib/cmake/SFML/SFMLSharedTargets-release.cmake
+Pong/SFML-2.6.1/lib/cmake/SFML/SFMLStaticTargets.cmake
+Pong/SFML-2.6.1/lib/cmake/SFML/SFMLStaticTargets-debug.cmake
+Pong/SFML-2.6.1/lib/cmake/SFML/SFMLStaticTargets-release.cmake

@@ -48,7 +48,7 @@ public:
     ////////////////////////////////////////////////////////////
     enum
     {
-        Count       = 8,  //!< Maximum number of supported joysticks
+        COUNT       = 8,  //!< Maximum number of supported joysticks
         ButtonCount = 32, //!< Maximum number of supported buttons
         AxisCount   = 8   //!< Maximum number of supported axes
     };

@@ -1,7 +1,7 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "ShapeGo.h"
 
-class Bat
+class Bat : public ShapeGo
 {
 protected:
 
@@ -11,7 +11,6 @@ public:
 	sf::FloatRect prevGlobalBounds;
 
 	float speed = 1000.f;
-	sf::RectangleShape shape;
 
 	void Update(float dt);
 	void Draw(sf::RenderWindow& window);
