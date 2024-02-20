@@ -1,18 +1,37 @@
 #pragma once
 
+template <typename T>
 class ShapeGo : public GameObject
 {
 public:
-	ShapeGo(const std::string name = "");
-	virtual ~ShapeGo();
+	ShapeGo(const std::string name) : GameObject(name)
+	{
 
-	void Init() override;
-	void Release() override;
+	}
 
-	void Reset() override;
+	virtual ~ShapeGo()
+	{
 
-	void Update(float dt) override;
-	void Draw(sf::RenderWindow& window) override;
+	}
+
+	void Init() override
+	{
+
+	}
+	void Release() override
+	{
+
+	}
+
+	void Reset() override
+	{
+
+	}
+
+	void Draw(sf::RenderWindow& window)
+	{
+		window.draw(shape);
+	}
 
 	void SetPosition(const sf::Vector2f& pos) override
 	{
@@ -20,25 +39,45 @@ public:
 		shape.setPosition(pos);
 	}
 
-	void SetScale(const sf::Vector2f& scale) override;
+	void SetScale(const sf::Vector2f& scale) override
+	{
+		GameObject::SetScale(scale);
+		shape.setScale(scale);
+	}
 
-	virtual void SetOrigin(Origins preset);
-	virtual void SetOrigin(const sf::Vector2f& newOrigin);
+	void SetOrigin(Origins preset) override
+	{
+		GameObject::SetOrigin(preset);
+		Utils::SetOrigin(shape, preset);
+	}
 
-	void SetTexture(const std::string& textureId);
-	void SetTexture(const sf::Texture& texture);
+	void SetOrigin(const sf::Vector2f& newOrigin) override
+	{
+		GameObject::SetOrigin(newOrigin);
+		shape.setOrigin(newOrigin);
+	}
 
-	void SetSize(const sf::Vector2f& size);
-	sf::Vector2f GetSize();
+	void SetSize(const sf::Vector2f& size)
+	{
+		shape.setSize(size);
+	}
 
-	void SetColor(sf::Color color);
+	sf::Vector2f GetSize()
+	{
+		return shape.getSize();
+	}
 
-	sf::FloatRect GetGlobalBounds();
+	void SetColor(sf::Color color)
+	{
+		shape.setFillColor(color);
+	}
 
-
+	sf::FloatRect GetGlobalBounds()
+	{
+		return shape.getGlobalBounds();
+	}
 
 protected:
-	sf::RectangleShape shape;
+	T shape;
 
 };
-

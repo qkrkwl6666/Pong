@@ -17,6 +17,7 @@ void poong::Init()
     _GameOver = new TextGo("GameOver");
 
     AddGo(_bat);
+    AddGo(_ball);
 
     fontResMgr.Load("font/DS-DIGI.ttf");
     _Ui->SetFont(fontResMgr.Get("font/DS-DIGI.ttf"));
@@ -65,11 +66,9 @@ void poong::Update(float dt)
 {
     Shot();
 
-    _bat->Update(dt);
-
 	if (!isBallActive)
     {
-        _ball->shape.setPosition(_bat->GetPosition());
+        _ball->SetPosition(_bat->GetPosition());
     }
     else
     {
@@ -81,12 +80,15 @@ void poong::Update(float dt)
         isBallActive = false;
         _ball->Fire( {0.f, 0.f}, 0.f );
         _lives--;
+        _score = 0;
         // 게임 재시작 대기
     }
-    else if (_ball->isBoundBat)
+
+    if (_ball->isBoundBat)
     {
         _score++;
     }
+
     if (_lives <= 0)
     {
         FRAMEWORK.SetTimeScale(0.f);
@@ -111,7 +113,7 @@ void poong::Update(float dt)
 
 void poong::Draw(sf::RenderWindow& window)
 {
-	window.draw(_ball->shape); 
+    Scene::Draw(window);
     _Ui->Draw(window);
     _GameOver->Draw(window);
 }

@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "Bat.h"
+#include "SpriteGo.h"
 
-Bat::Bat()
+Bat::Bat() : ShapeGo<sf::RectangleShape>("BatName")
 {
 	SetSize({ 100.f, 5.f });
 	SetPosition({ 1920.f / 2.f, 1080.f - 20.f });

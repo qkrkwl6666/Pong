@@ -3,11 +3,11 @@
 #include "Bat.h"
 
 Ball::Ball(Bat& bat, const sf::FloatRect& bounds)
-	: bat(bat), windowBounds(bounds)
+	: ShapeGo<sf::CircleShape>("Ball"), bat(bat), windowBounds(bounds)
 {
 	shape.setRadius(10.f);
-	shape.setFillColor(sf::Color::White);
-	Utils::SetOrigin(shape, Origins::BC);
+	SetColor(sf::Color::White);
+	SetOrigin(Origins::BC);
 }
 
 void Ball::Fire(sf::Vector2f d, float s)
@@ -21,13 +21,13 @@ void Ball::Update(float dt)
 {
 	isBoundBat = false;
 
-	const sf::FloatRect& prevBallBounds = shape.getGlobalBounds();
-	sf::Vector2f prevPos = shape.getPosition();
+	const sf::FloatRect& prevBallBounds = GetGlobalBounds();
+	sf::Vector2f prevPos = GetPosition();
 	sf::Vector2f pos = prevPos;
 	pos += direction * speed * dt;
-	shape.setPosition(pos);
+	SetPosition(pos);
 
-	const sf::FloatRect& ballBounds = shape.getGlobalBounds();
+	const sf::FloatRect& ballBounds = GetGlobalBounds();
 	float ballLeft = ballBounds.left;
 	float ballRight = ballBounds.left + ballBounds.width;
 	float ballTop = ballBounds.top;
@@ -43,17 +43,17 @@ void Ball::Update(float dt)
 	if (ballBottom > windowBottom + 300)
 	{
 		isDead = true;
-		shape.setPosition(prevPos);
+		SetPosition(prevPos);
 		direction.y *= -1.f;
 	}
 	else if (ballTop < windowTop)
 	{
-		shape.setPosition(prevPos);
+		SetPosition(prevPos);
 		direction.y *= -1.f;
 	}
 	else if (ballLeft < windowLeft || ballRight > windowRight)
 	{
-		shape.setPosition(prevPos);
+		SetPosition(prevPos);
 		direction.x *= -1.f;
 	}
 
@@ -61,6 +61,8 @@ void Ball::Update(float dt)
 	const sf::FloatRect& batBounds = bat.GetGlobalBounds();
 	if (!prevBallBounds.intersects(bat.prevGlobalBounds) && ballBounds.intersects(batBounds))
 	{
+		isBoundBat = true;
+
 		float batLeft = batBounds.left;
 		float batRight = batBounds.left + batBounds.width;
 		float batTop = batBounds.top;
@@ -74,11 +76,10 @@ void Ball::Update(float dt)
 		{
 			direction.x *= -1.f;
 		}
-		isBoundBat = true;
 	}
 }
 
 void Ball::Draw(sf::RenderWindow& window)
 {
-	window.draw(shape);
+	ShapeGo<sf::CircleShape>::Draw(window);
 }
