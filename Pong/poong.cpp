@@ -18,6 +18,8 @@ void poong::Init()
 
     AddGo(_bat);
     AddGo(_ball);
+    AddGo(_Ui);
+    AddGo(_GameOver);
 
     fontResMgr.Load("font/DS-DIGI.ttf");
     _Ui->SetFont(fontResMgr.Get("font/DS-DIGI.ttf"));
@@ -26,7 +28,7 @@ void poong::Init()
     _GameOver->SetFont(fontResMgr.Get("font/DS-DIGI.ttf"));
     _GameOver->SetCharacterSize(75);
     _GameOver->SetPosition({ 1920.f / 2 , 1080.f / 2 });
-    _GameOver->SetString("");
+    _GameOver->SetString("GameOver Enter To Restart");
     _GameOver->SetOrigin(Origins::MC);
     _GameOver->SetActive(false);
   
@@ -47,7 +49,7 @@ void poong::Reset()
     _score = 0;
     _lives = 3;
     isGameOver = false;
-    _GameOver->SetString("");
+    _GameOver->SetActive(false);
     isBallActive = false;
     _ball->Fire( {0.f, 0.f}, 0.f );
 }
@@ -72,7 +74,7 @@ void poong::Update(float dt)
     }
     else
     {
-        _ball->Update(dt);
+       // _ball->Update(dt);
     }
 
     if (_ball->isDead)
@@ -92,7 +94,7 @@ void poong::Update(float dt)
     if (_lives <= 0)
     {
         FRAMEWORK.SetTimeScale(0.f);
-        _GameOver->SetString("GameOver Enter To Restart");
+        _GameOver->SetActive(true);
         isGameOver = true;
     }
 
@@ -114,8 +116,6 @@ void poong::Update(float dt)
 void poong::Draw(sf::RenderWindow& window)
 {
     Scene::Draw(window);
-    _Ui->Draw(window);
-    _GameOver->Draw(window);
 }
 
 void poong::Shot()
